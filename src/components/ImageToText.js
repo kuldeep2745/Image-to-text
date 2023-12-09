@@ -43,32 +43,34 @@ const ImageToTextConverter = () => {
         Drag and drop or click to select multiple image files
       </label>
       {images.map((image, index) => (
-        <div key={index} className="mt-4">
-          <img
-            src={image}
-            alt={`Uploaded ${index}`}
-            className="img-fluid"
-            style={{ height: '200px', objectFit: 'cover', marginBottom: '10px' }}
-          />
-          <CopyToClipboard text={texts[index]}>
-            <div className="card" style={{ height: '200px', overflowY: 'auto' }}>
-              <div className="card-body">
-                <p className="card-text">Extracted Text: {texts[index]}</p>
+        <div key={index} className="mt-4 d-flex">
+          <div style={{ height: '200px', width: '200px', marginRight: '20px' }}>
+            <img src={image} alt={`Uploaded ${index}`} className="img-fluid" style={{ height: '100%', width: '100%' }} />
+          </div>
+          <div style={{ height: '200px', width: '800px' }}>
+            <CopyToClipboard text={texts[index]}>
+              <div className="card" style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
+                <div className="card-header" style={{ position: 'sticky', top: '0', zIndex: '1', backgroundColor: 'white' }}>
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => alert('Text copied to clipboard!')}
+                  >
+                    Copy
+                  </button>
+                  <a
+                    className="btn btn-success ml-2"
+                    href={`data:text/plain;charset=utf-8,${encodeURIComponent(texts[index])}`}
+                    download={`extracted_text_${index}.txt`}
+                  >
+                    Download
+                  </a>
+                </div>
+                <div className="card-body" style={{ overflowY: 'auto' }}>
+                  <p className="card-text">Extracted Text: {texts[index]}</p>
+                </div>
               </div>
-              <div className="card-footer">
-                <button className="btn btn-secondary" onClick={() => alert('Text copied to clipboard!')}>
-                  Copy
-                </button>
-                <a
-                  className="btn btn-success ml-2"
-                  href={`data:text/plain;charset=utf-8,${encodeURIComponent(texts[index])}`}
-                  download={`extracted_text_${index}.txt`}
-                >
-                  Download
-                </a>
-              </div>
-            </div>
-          </CopyToClipboard>
+            </CopyToClipboard>
+          </div>
         </div>
       ))}
     </div>
